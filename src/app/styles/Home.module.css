@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.topBar {
+  background-color: #C0BCDD;
+  color: #000;
+  text-align: center;
+  padding: 0.5rem 2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+}
+
+.container {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.logoContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.navbarCenter {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.navLogin {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navButton:hover {
+  color: #7c3aed;
+}
+
+.navButton::after {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width: 0%;
+  height: 2px;
+  background: #7c3aed;
+  transition: width 0.3s;
+}
+
+.navButton:hover::after {
+  width: 100%;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #fff;
+}
+
+.heroImage {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 8rem;
+}
+
+.heroContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4rem;
+}
+
+.heroContent img {
+  margin-bottom: 3rem;
+}
+
+.ctaButton {
+  background-color: #E5839A;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  font-size: 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 251px;
+  height: 63px;
+  transition: background-color 0.3s ease;
+}
+
+.ctaButton:hover {
+  background-color: #e11d48;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #7c3aed;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.greenSection {
+  background-image: url('/wave-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-color: transparent;
+  color: #fff;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rem 6rem 4rem;
+  margin-top: 4rem;
+  overflow: hidden;
+}
+
+.greenContent {
+  flex: 1;
+  padding-right: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.greenContent h2 {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #f9d2c3;
+  text-transform: none;
+}
+
+.greenContent p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.greenImage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroImage {
+    padding-left: 0;
+    margin-bottom: 2rem;
+  }
+
+  .heroContent {
+    margin-right: 0;
+    align-items: center;
+  }
+
+  .ctaButton {
+    width: 200px;
+    height: 55px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .navbarCenter {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .heroImage {
+    margin-bottom: 1.5rem;
+  }
+
+  .ctaButton {
+    width: 180px;
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .topBar {
+    font-size: 0.7rem;
+    padding: 0.5rem 1rem;
+  }
+}
