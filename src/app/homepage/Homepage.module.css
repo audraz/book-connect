@@ -1,22 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+.container {
+  font-family: 'Poppins', sans-serif;
+}
 
 .topBar {
   background-color: #C0BCDD;
   color: #000;
   text-align: center;
   padding: 0.5rem 2rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.05rem;
-}
-
-.container {
-  font-family: 'Poppins', sans-serif;
-  background-color: #fff;
-  color: #333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .header {
@@ -26,7 +19,6 @@
   padding: 1.5rem 2rem;
   background-color: #fff;
   border-bottom: 1px solid #e5e5e5;
-  position: relative;
 }
 
 .logoContainer {
@@ -38,6 +30,12 @@
   display: flex;
   justify-content: center;
   gap: 2rem;
+}
+
+.navLogin {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .navButton {
@@ -54,47 +52,111 @@
   color: #7c3aed;
 }
 
-.hamburgerMenu {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+.navButton::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #7c3aed;
+  transition: width 0.3s;
 }
 
-.mobileMenu {
-  position: absolute;
-  top: 100%;
-  right: 1rem;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 1rem;
+.navButton:hover::after {
+  width: 100%;
+}
+
+.main {
+  padding: 3rem 2rem;
+  background: #FFF;
+  position: relative;
+}
+
+.welcomeContainer {
+  text-align: left;
+  margin: 3rem 4rem;
+}
+
+.welcome {
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: 400;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  width: 386px;
+  height: 351px;
+  transition: transform 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
-.mobileMenu button {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  text-align: left;
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardImage {
+  margin: 1rem auto;
+}
+
+.card h3 {
+  font-size: 1.2rem;
   color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 1rem 0;
+}
+
+.cardButton {
+  background-color: #E5839A;
+  border: none;
+  color: white;
+  padding: 0.6rem;
+  width: 154px;
+  height: 40px;
+  border-radius: 20px;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  margin: 0 auto;
 }
 
-.mobileMenu button:hover {
-  color: #7c3aed;
+.cardButton:hover {
+  background-color: #5a0eb6;
 }
 
-@media (max-width: 768px) {
-  .navbarCenter {
-    display: none;
-  }
-
-  .hamburgerMenu {
-    display: block;
-  }
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-image: url('/wave.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%; 
+  z-index: -1;
 }

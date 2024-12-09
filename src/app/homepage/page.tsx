@@ -32,13 +32,16 @@ export default function Homepage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topBar}>
-        WELCOME, {session.user.name.toUpperCase()}!
-      </div>
+      <div className={styles.topBar}>HI, user!</div>
 
       <header className={styles.header}>
         <div className={styles.logoContainer}>
-          <Image src="/logo.png" alt="BookConnect Logo" width={150} height={50} />
+          <Image
+            src="/logo.png"
+            alt="BookConnect Logo"
+            width={150}
+            height={50}
+          />
         </div>
 
         <div className={styles.navbarCenter}>
@@ -69,6 +72,7 @@ export default function Homepage() {
         </div>
       </header>
 
+      {/* Welcome Section */}
       <div className={styles.welcomeContainer}>
         <h2 className={styles.welcome}>Welcome :)</h2>
         <p className={styles.subtitle}>What book did you read today?</p>
@@ -77,6 +81,7 @@ export default function Homepage() {
       <main className={styles.main}>
         <div className={styles.cards}>
           <div className={styles.card}>
+            <h3>You haven’t read any book!</h3>
             <Image
               src="/read-book.png"
               alt="Read Book"
@@ -84,7 +89,6 @@ export default function Homepage() {
               height={100}
               className={styles.cardImage}
             />
-            <h3>You haven’t read any book!</h3>
             <p>Let’s start your reading journey now!</p>
             <button
               className={styles.cardButton}
@@ -93,7 +97,9 @@ export default function Homepage() {
               Choose a Book
             </button>
           </div>
+
           <div className={styles.card}>
+            <h3>Chapter To Screen</h3>
             <Image
               src="/film.png"
               alt="Chapter to Screen"
@@ -101,7 +107,6 @@ export default function Homepage() {
               height={100}
               className={styles.cardImage}
             />
-            <h3>Chapter To Screen</h3>
             <p>
               Suggest films, series, and podcasts to enhance your reading
               experience through other entertainment formats.
@@ -115,6 +120,16 @@ export default function Homepage() {
           </div>
         </div>
       </main>
+
+      <div className={styles.waveContainer}>
+        <Image
+          src="/wave.png"
+          alt="Wave Background"
+          width={1920}
+          height={200}
+          className={styles.wave}
+        />
+      </div>
     </div>
   );
 }
