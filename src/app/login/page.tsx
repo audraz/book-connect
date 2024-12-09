@@ -13,13 +13,8 @@ export default function Login() {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const email = (document.getElementById("email") as HTMLInputElement).value.trim();
-    const password = (document.getElementById("password") as HTMLInputElement).value.trim();
-
-    if (!email || !password) {
-      alert("Please enter both email and password.");
-      return;
-    }
+    const email = (document.getElementById("email") as HTMLInputElement).value;
+    const password = (document.getElementById("password") as HTMLInputElement).value;
 
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
@@ -27,9 +22,11 @@ export default function Login() {
       const result = await signIn("credentials", {
         email,
         password,
-        users: JSON.stringify(users),
+        users: JSON.stringify(users), 
         redirect: false,
       });
+
+      console.log("Login result:", result);
 
       if (result?.error) {
         alert("Invalid email or password. Please try again.");
@@ -58,26 +55,12 @@ export default function Login() {
         <main className={styles.main}>
           <form className={styles.form} onSubmit={handleLogin}>
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              autoComplete="email"
-              required
-            />
+            <input type="email" id="email" placeholder="Enter your email" required />
 
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              autoComplete="current-password"
-              required
-            />
+            <input type="password" id="password" placeholder="Enter your password" required />
 
-            <button type="submit" className={styles.button}>
-              Log In
-            </button>
+            <button type="submit" className={styles.button}>Log In</button>
           </form>
           <p className={styles.signupPrompt}>
             Don't have an account?{" "}
