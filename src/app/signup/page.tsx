@@ -3,13 +3,14 @@
 import { useRouter } from "next/navigation";
 import { Poppins } from "next/font/google";
 import styles from "./Signup.module.css";
+import { signIn } from "next-auth/react";
 
 const poppins = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
 export default function Signup() {
   const router = useRouter();
 
-  const handleSignup = (event: React.FormEvent) => {
+  const handleSignup = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const name = (document.getElementById("name") as HTMLInputElement)?.value.trim();
@@ -58,8 +59,27 @@ export default function Signup() {
 
     console.log("New user registered:", newUser); 
 
-    alert("Signup successful! Redirecting to homepage...");
-    router.push("/homepage");
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        users: JSON.stringify(users), 
+        redirect: false,
+      });
+
+      if (result?.error) {
+        console.error("Error during auto-login:", result.error);
+        alert("An error occurred during login. Please try to log in manually.");
+        router.push("/login");
+        return;
+      }
+
+      alert("Signup successful! Redirecting to homepage...");
+      router.push("/homepage");
+    } catch (error) {
+      console.error("Error during auto-login:", error);
+      alert("An unexpected error occurred. Please try again later.");
+    }
   };
 
   return (

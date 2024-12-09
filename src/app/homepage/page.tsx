@@ -32,7 +32,9 @@ export default function Homepage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topBar}>HI, user!</div>
+      <div className={styles.topBar}>
+        Hi, {session.user?.name || "User"}!
+      </div>
 
       <header className={styles.header}>
         <div className={styles.logoContainer}>
@@ -45,7 +47,10 @@ export default function Homepage() {
         </div>
 
         <div className={styles.navbarCenter}>
-          <button className={styles.navButton} onClick={() => router.push("/")}>
+          <button
+            className={styles.navButton}
+            onClick={() => router.push("/")}
+          >
             Home
           </button>
           <button
@@ -72,9 +77,8 @@ export default function Homepage() {
         </div>
       </header>
 
-      {/* Welcome Section */}
       <div className={styles.welcomeContainer}>
-        <h2 className={styles.welcome}>Welcome :)</h2>
+        <h2 className={styles.welcome}>Welcome, {session.user?.name || "User"} :)</h2>
         <p className={styles.subtitle}>What book did you read today?</p>
       </div>
 
