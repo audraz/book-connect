@@ -54,7 +54,6 @@ export default function Home() {
           <button className={styles.navButton} onClick={scrollToGreenSection}>
             About
           </button>
-          <button className={styles.navButton}>Learn More</button>
         </nav>
 
         <div className={styles.navLogin}>
