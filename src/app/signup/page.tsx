@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { Poppins } from "next/font/google";
 import styles from "./Signup.module.css";
-import { signIn } from "next-auth/react";
 
 const poppins = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
@@ -18,6 +17,7 @@ export default function Signup() {
     const password = (document.getElementById("password") as HTMLInputElement)?.value;
     const confirmPassword = (document.getElementById("confirmPassword") as HTMLInputElement)?.value;
 
+    // Validasi input
     if (!name || !email || !password || !confirmPassword) {
       alert("All fields are required!");
       return;
@@ -39,46 +39,28 @@ export default function Signup() {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-
-    const userExists = users.find((user: { email: string }) => user.email === email);
-    if (userExists) {
-      alert("Email is already registered. Please log in or use another email.");
-      return;
-    }
-
-    const newUser = {
-      id: new Date().getTime().toString(), 
-      name,
-      email,
-      password,
-    };
-
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    console.log("New user registered:", newUser); 
-
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        users: JSON.stringify(users), 
-        redirect: false,
+      // Kirim data ke backend API
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
       });
 
-      if (result?.error) {
-        console.error("Error during auto-login:", result.error);
-        alert("An error occurred during login. Please try to log in manually.");
-        router.push("/login");
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.error || "Signup failed. Please try again.");
         return;
       }
 
-      alert("Signup successful! Redirecting to homepage...");
+      // Jika berhasil, redirect ke homepage
+      alert("Signup successful! Please log in to your account...");
       router.push("/homepage");
     } catch (error) {
-      console.error("Error during auto-login:", error);
-      alert("An unexpected error occurred. Please try again later.");
+      console.error("Signup error:", error);
+      alert("An unexpected error occurred. Please try again.");
     }
   };
 

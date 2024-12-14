@@ -1,10 +1,11 @@
-import "next-auth";
+import NextAuth from "next-auth";
 
 declare module "next-auth" {
   interface User {
     id: string;
     name: string;
     email: string;
+    password?: string; // Tambahkan properti password
   }
 
   interface Session {
@@ -13,11 +14,5 @@ declare module "next-auth" {
       name: string;
       email: string;
     };
-  }
-
-  interface JWT {
-    id: string;
-    name: string;
-    email: string;
   }
 }
