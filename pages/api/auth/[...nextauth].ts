@@ -1,11 +1,11 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "../../../lib/prisma"; // Pastikan path Prisma sudah benar
+import prisma from "../../../lib/prisma"; 
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export default NextAuth({
-  adapter: PrismaAdapter(prisma), // Menggunakan Prisma sebagai adapter
+  adapter: PrismaAdapter(prisma), 
   providers: [
     CredentialsProvider({
       name: "Credentials",
