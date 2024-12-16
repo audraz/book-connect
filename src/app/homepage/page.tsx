@@ -4,17 +4,50 @@ import styles from "./Homepage.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Homepage() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const [userBooks, setUserBooks] = useState<any[]>([]);
+  const [progress, setProgress] = useState<number>(0);
 
+  // Redirect jika tidak login
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
+    } else if (session?.user?.email) {
+      // Ambil buku user dari database
+      fetch(`/api/user-books?user_id=${session.user.email}`)
+        .then((res) => res.json())
+        .then((data) => setUserBooks(data))
+        .catch((err) => console.error("Failed to fetch books:", err));
     }
-  }, [status, router]);
+  }, [status, session, router]);
+
+  // Fungsi Logout
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    alert("You have been logged out.");
+    router.push("/login");
+  };
+
+  // Update progress bacaan
+  const updateProgress = async (bookName: string) => {
+    const response = await fetch("/api/user-books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: session?.user?.email,
+        book_name: bookName,
+        progress: progress,
+      }),
+    });
+    if (response.ok) {
+      alert("Progress updated!");
+      location.reload();
+    }
+  };
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -23,12 +56,6 @@ export default function Homepage() {
   if (!session) {
     return null;
   }
-
-  const handleLogout = async () => {
-    await signOut({ redirect: false });
-    alert("You have been logged out.");
-    router.push("/login");
-  };
 
   return (
     <div className={styles.container}>
@@ -78,23 +105,47 @@ export default function Homepage() {
 
       <main className={styles.main}>
         <div className={styles.cards}>
-          <div className={styles.card}>
-            <h3>You haven’t read any book!</h3>
-            <Image
-              src="/read-book.png"
-              alt="Read Book"
-              width={100}
-              height={100}
-              className={styles.cardImage}
-            />
-            <p>Let’s start your reading journey now!</p>
-            <button
-              className={styles.cardButton}
-              onClick={() => router.push("/choose-book")}
-            >
-              Choose a Book
-            </button>
-          </div>
+          {userBooks.length > 0 ? (
+            userBooks.map((book) => (
+              <div className={styles.card} key={book.id}>
+                <h3>{book.book_name}</h3>
+                <p>Author: {book.author}</p>
+                <p>Progress: {book.progress}%</p>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={progress}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                  style={{ margin: "10px 0" }}
+                />
+                <button
+                  className={styles.cardButton}
+                  onClick={() => updateProgress(book.book_name)}
+                >
+                  Update Progress
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className={styles.card}>
+              <h3>You haven’t read any book!</h3>
+              <Image
+                src="/read-book.png"
+                alt="Read Book"
+                width={100}
+                height={100}
+                className={styles.cardImage}
+              />
+              <p>Let’s start your reading journey now!</p>
+              <button
+                className={styles.cardButton}
+                onClick={() => router.push("/choose-book")}
+              >
+                Choose a Book
+              </button>
+            </div>
+          )}
 
           <div className={styles.card}>
             <h3>Chapter To Screen</h3>
