@@ -59,12 +59,6 @@ export default function Homepage() {
           >
             Profile
           </button>
-          <button
-            className={styles.navButton}
-            onClick={() => router.push("/about")}
-          >
-            About
-          </button>
         </div>
 
         <div className={styles.navLogin}>
@@ -78,7 +72,7 @@ export default function Homepage() {
       </header>
 
       <div className={styles.welcomeContainer}>
-        <h2 className={styles.welcome}>Welcome, {session.user?.name || "User"} :)</h2>
+        <h2 className={styles.welcome}>Welcome :)</h2>
         <p className={styles.subtitle}>What book did you read today?</p>
       </div>
 
