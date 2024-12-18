@@ -126,6 +126,44 @@
   color: #D8C2F3;
 }
 
+.alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4c4c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  opacity: 0;
+  animation: fadeInOut 3s forwards;
+  z-index: 999;
+}
+
+.success {
+  background-color: #4caf50;
+}
+
+.error {
+  background-color: #ff4c4c;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;

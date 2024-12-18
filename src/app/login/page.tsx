@@ -3,12 +3,14 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Poppins } from "next/font/google";
+import { useState } from "react"; // Import useState
 import styles from "./Login.module.css";
 
 const poppins = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
 export default function Login() {
   const router = useRouter();
+  const [alert, setAlert] = useState<{ message: string; type: string } | null>(null); 
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -22,22 +24,22 @@ export default function Login() {
       const result = await signIn("credentials", {
         email,
         password,
-        users: JSON.stringify(users), 
+        users: JSON.stringify(users),
         redirect: false,
       });
 
       console.log("Login result:", result);
 
       if (result?.error) {
-        alert("Invalid email or password. Please try again.");
+        setAlert({ message: "Invalid email or password. Please try again.", type: "error" });
         return;
       }
 
-      alert("Login successful! Redirecting to homepage...");
-      router.push("/homepage");
+      setAlert({ message: "Login successful! Redirecting to homepage...", type: "success" });
+      setTimeout(() => router.push("/homepage"), 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error("Error during login:", error);
-      alert("An unexpected error occurred. Please try again later.");
+      setAlert({ message: "An unexpected error occurred. Please try again later.", type: "error" });
     }
   };
 
@@ -70,6 +72,14 @@ export default function Login() {
           </p>
         </main>
       </div>
+
+      {alert && (
+        <div
+          className={`${styles.alert} ${alert.type === "success" ? styles.success : styles.error}`}
+        >
+          {alert.message}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Poppins } from "next/font/google";
 import styles from "./Signup.module.css";
@@ -8,6 +9,7 @@ const poppins = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
 export default function Signup() {
   const router = useRouter();
+  const [alert, setAlert] = useState<{ message: string; type: string } | null>(null);
 
   const handleSignup = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -17,30 +19,28 @@ export default function Signup() {
     const password = (document.getElementById("password") as HTMLInputElement)?.value;
     const confirmPassword = (document.getElementById("confirmPassword") as HTMLInputElement)?.value;
 
-    // Validasi input
     if (!name || !email || !password || !confirmPassword) {
-      alert("All fields are required!");
+      setAlert({ message: "All fields are required!", type: "error" });
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address!");
+      setAlert({ message: "Please enter a valid email address!", type: "error" });
       return;
     }
 
     if (password.length < 6) {
-      alert("Password must be at least 6 characters long!");
+      setAlert({ message: "Password must be at least 6 characters long!", type: "error" });
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setAlert({ message: "Passwords do not match!", type: "error" });
       return;
     }
 
     try {
-      // Kirim data ke backend API
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
@@ -51,16 +51,15 @@ export default function Signup() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(errorData.error || "Signup failed. Please try again.");
+        setAlert({ message: errorData.error || "Signup failed. Please try again.", type: "error" });
         return;
       }
 
-      // Jika berhasil, redirect ke homepage
-      alert("Signup successful! Please log in to your account...");
-      router.push("/homepage");
+      setAlert({ message: "Signup successful! Please log in to your account...", type: "success" });
+      setTimeout(() => router.push("/homepage"), 2000); 
     } catch (error) {
       console.error("Signup error:", error);
-      alert("An unexpected error occurred. Please try again.");
+      setAlert({ message: "An unexpected error occurred. Please try again.", type: "error" });
     }
   };
 
@@ -110,6 +109,14 @@ export default function Signup() {
           </p>
         </main>
       </div>
+
+      {alert && (
+        <div
+          className={`${styles.alert} ${alert.type === "success" ? styles.success : styles.error}`}
+        >
+          {alert.message}
+        </div>
+      )}
     </div>
   );
 }
