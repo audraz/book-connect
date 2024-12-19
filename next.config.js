@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ["books.google.com"], 
-  },
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
-module.exports = nextConfig;
+export default nextConfig;
