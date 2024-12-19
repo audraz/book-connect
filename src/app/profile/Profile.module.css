@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&family=Poppins&display=swap');
+
+.container {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .topBar {
+    background-color: #C0BCDD;
+    color: #000;
+    text-align: center;
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .logoContainer {
+    flex: 1;
+  }
+  
+  .navbarCenter {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .navLogin {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .navButton {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navButton:hover {
+    color: #7c3aed;
+  }
+  
+  .navButton::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #7c3aed;
+    transition: width 0.3s;
+  }
+  
+  .navButton:hover::after {
+    width: 100%;
+  }
+  
+  .profileContainer {
+    padding: 2rem;
+    margin-top: 6rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .profileInfo {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .inputGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .inputGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .inputGroup input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .saveButton {
+    background-color: #E5839A;
+    border: none;
+    color: white;
+    padding: 0.6rem;
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+  
+  .saveButton:hover {
+    background-color: #f8a5d7;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9rem;
+  }
+  
+  .success {
+    color: green;
+    font-size: 0.9rem;
+  }
+  
+  .profileContainer {
+    flex: 1; 
+  }
+  
+  

@@ -1,0 +1,318 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.topBar {
+  background-color: #C0BCDD;
+  color: #000;
+  text-align: center;
+  padding: 0.5rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.container {
+    font-family: "Poppins", sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 2rem; 
+  }
+
+.title {
+  font-size: 4rem;
+  margin-top: 6.5rem;
+  color: #333;
+  font-weight: 600;
+  animation: fadeIn 0.8s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  color: #555;
+  font-weight: 400;
+  font-size: 1.25rem;
+  animation: fadeIn 0.8s ease-out 0.4s;
+  animation-fill-mode: both;
+}
+
+.inputContainer {
+  margin: 1.5rem 0;
+  animation: fadeIn 0.8s ease-out 0.6s;
+  animation-fill-mode: both;
+}
+
+.inputField {
+  padding: 1rem;
+  width: 50rem;
+  height: 3rem;
+  margin-bottom: 30px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.searchButton {
+  padding: 0.5rem 1rem;
+  background-color: #E5839A;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+.popupBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 3rem;
+    border-radius: 8px;
+    width: 800px;
+    height: 600px;
+    z-index: 200;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+    opacity: 1; /* Pastikan popup terlihat */
+    visibility: visible; /* Atur agar terlihat */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+.popupTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.carouselContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 300px;
+  gap: 1rem;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.carouselContent.fade-out {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.carouselContent.fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.poster {
+  width: 150px;
+  height: 225px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.movieInfo h3 {
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #5C876B;
+  font-family: "Poppins", sans-serif;
+}
+
+.navButton:first-of-type {
+  left: 1rem;
+}
+
+.navButton:last-of-type {
+  right: 1rem;
+}
+
+.navButton:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+  }  
+
+.closeButton {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #E5839A;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+.waveContainer {
+    margin-top: 3rem;
+  }
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-image: url('/wave.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: -1;
+  }
+  
+@media (max-width: 1024px) {
+  .popup {
+    width: 90%;
+    height: 500px;
+  }
+
+  .inputField {
+    width: 90%;
+  }
+
+  .poster {
+    width: 120px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .popup {
+    width: 95%;
+    height: 450px;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .inputField {
+    width: 100%;
+  }
+
+  .poster {
+    width: 100px;
+    height: 150px;
+  }
+  .wave {
+    height: 300px; 
+    background-size: 100% 100%;
+  }
+}
+
+@media (max-width: 480px) {
+    .popup {
+      width: 95%;
+      height: 70%;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding-left: 2rem;
+      padding-right: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 3.5rem;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+  
+    .fixedContent {
+      overflow: hidden;
+    }
+  
+    .descriptionContainer {
+      overflow-y: auto; 
+      flex-grow: 1; 
+    }
+  
+    .description {
+      font-size: 0.8rem;
+      color: #666;
+    }
+  
+    .navButton {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .closeButton {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .wave {
+        height: 500px; 
+        background-size: 100% 100%;
+      }
+  }
+  

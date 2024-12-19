@@ -1,27 +1,32 @@
 "use client";
 
-import styles from "./Homepage.module.css";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Image from 'next/image';
+import { signOut } from "next-auth/react";
+import styles from "./Homepage.module.css";
 
 export default function Homepage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [userBooks, setUserBooks] = useState<any[]>([]);
+  const [currentBook, setCurrentBook] = useState<any>(null); // Track current book
   const [progress, setProgress] = useState<number>(0);
 
-  // Redirect jika tidak login
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
     } else if (session?.user?.email) {
-      // Ambil buku user dari database
       fetch(`/api/user-books?user_id=${session.user.email}`)
         .then((res) => res.json())
         .then((data) => setUserBooks(data))
         .catch((err) => console.error("Failed to fetch books:", err));
+    }
+
+    const storedBook = localStorage.getItem('currentBook');
+    if (storedBook) {
+      setCurrentBook(JSON.parse(storedBook));
     }
   }, [status, session, router]);
 
@@ -105,28 +110,34 @@ export default function Homepage() {
 
       <main className={styles.main}>
         <div className={styles.cards}>
-          {userBooks.length > 0 ? (
-            userBooks.map((book) => (
-              <div className={styles.card} key={book.id}>
-                <h3>{book.book_name}</h3>
-                <p>Author: {book.author}</p>
-                <p>Progress: {book.progress}%</p>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={progress}
-                  onChange={(e) => setProgress(Number(e.target.value))}
-                  style={{ margin: "10px 0" }}
+          {currentBook ? (
+            <div className={styles.card} key={currentBook.title}>
+              <h3>{currentBook.title}</h3>
+              <p>Author: {currentBook.author}</p>
+              <p>Progress: {currentBook.progress}%</p>
+              <Image
+                src={currentBook.coverUrl || "/placeholder-cover.png"}
+                alt={currentBook.title}
+                width={100}
+                height={150}
+                className={styles.cardImage}
+              />
+              <div className={styles.progressBar}>
+                <div
+                  style={{
+                    width: `${currentBook.progress}%`,
+                    height: "10px",
+                    backgroundColor: "#0070f3",
+                  }}
                 />
-                <button
-                  className={styles.cardButton}
-                  onClick={() => updateProgress(book.book_name)}
-                >
-                  Update Progress
-                </button>
               </div>
-            ))
+              <button
+                className={styles.cardButton}
+                onClick={() => updateProgress(currentBook.title)}
+              >
+                Update Progress
+              </button>
+            </div>
           ) : (
             <div className={styles.card}>
               <h3>You haven’t read any book!</h3>

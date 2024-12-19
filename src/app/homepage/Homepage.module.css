@@ -164,7 +164,6 @@
   z-index: -1;
 }
 
-/* Tambahan Responsivitas */
 @media (max-width: 1024px) {
   .navbarCenter {
     gap: 1rem;

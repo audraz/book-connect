@@ -40,3 +40,5 @@ yarn-error.log*
 next-env.d.ts
 
 public/data/books_tfidf.json
+public/data/movies_with_posters.csv
+public/data/books_cleaned.csv
