@@ -11,57 +11,59 @@ export default function Signup() {
   const router = useRouter();
   const [alert, setAlert] = useState<{ message: string; type: string } | null>(null);
 
-  const handleSignup = async (event: React.FormEvent) => {
-    event.preventDefault();
+  // Client-side code
+const handleSignup = async (event: React.FormEvent) => {
+  event.preventDefault();
 
-    const name = (document.getElementById("name") as HTMLInputElement)?.value.trim();
-    const email = (document.getElementById("email") as HTMLInputElement)?.value.trim();
-    const password = (document.getElementById("password") as HTMLInputElement)?.value;
-    const confirmPassword = (document.getElementById("confirmPassword") as HTMLInputElement)?.value;
+  const name = (document.getElementById("name") as HTMLInputElement)?.value.trim();
+  const email = (document.getElementById("email") as HTMLInputElement)?.value.trim();
+  const password = (document.getElementById("password") as HTMLInputElement)?.value;
+  const confirmPassword = (document.getElementById("confirmPassword") as HTMLInputElement)?.value;
 
-    if (!name || !email || !password || !confirmPassword) {
-      setAlert({ message: "All fields are required!", type: "error" });
+  if (!name || !email || !password || !confirmPassword) {
+    setAlert({ message: "All fields are required!", type: "error" });
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    setAlert({ message: "Please enter a valid email address!", type: "error" });
+    return;
+  }
+
+  if (password.length < 6) {
+    setAlert({ message: "Password must be at least 6 characters long!", type: "error" });
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    setAlert({ message: "Passwords do not match!", type: "error" });
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/auth/signup", {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error Response:", errorData); // Log the error response to debug
+      setAlert({ message: errorData.error || "Signup failed. Please try again.", type: "error" });
       return;
-    }
+    }    
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setAlert({ message: "Please enter a valid email address!", type: "error" });
-      return;
-    }
-
-    if (password.length < 6) {
-      setAlert({ message: "Password must be at least 6 characters long!", type: "error" });
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setAlert({ message: "Passwords do not match!", type: "error" });
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setAlert({ message: errorData.error || "Signup failed. Please try again.", type: "error" });
-        return;
-      }
-
-      setAlert({ message: "Signup successful! Please log in to your account...", type: "success" });
-      setTimeout(() => router.push("/homepage"), 2000); 
-    } catch (error) {
-      console.error("Signup error:", error);
-      setAlert({ message: "An unexpected error occurred. Please try again.", type: "error" });
-    }
-  };
+    setAlert({ message: "Signup successful! Please log in to your account...", type: "success" });
+    setTimeout(() => router.push("/homepage"), 2000);
+  } catch (error) {
+    console.error("Signup error:", error);
+    setAlert({ message: "An unexpected error occurred. Please try again.", type: "error" });
+  }
+};
 
   return (
     <div className={`${styles.container} ${poppins.className}`}>
