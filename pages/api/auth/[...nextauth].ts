@@ -14,40 +14,45 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        if (!credentials || !credentials.email || !credentials.password) {
-          console.error("No credentials provided");
+        try {
+          if (!credentials || !credentials.email || !credentials.password) {
+            console.error("No credentials provided");
+            throw new Error("Invalid email or password.");
+          }
+      
+          console.log("Step 1 - Credentials received:", credentials);
+      
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+            select: { id: true, name: true, email: true, password: true },
+          });
+      
+          console.log("Step 2 - User found in database:", user);
+      
+          if (!user) {
+            console.error("Step 3 - No user found with this email.");
+            throw new Error("Invalid email or password.");
+          }
+      
+          const isValidPassword = await bcrypt.compare(credentials.password, user.password || "");
+          console.log("Step 4 - Password is valid:", isValidPassword);
+      
+          if (!isValidPassword) {
+            console.error("Step 5 - Password does not match.");
+            throw new Error("Invalid email or password.");
+          }
+      
+          console.log("Step 6 - Login successful!");
+      
+          return {
+            id: user.id,
+            name: user.name || "No Name", 
+            email: user.email,
+          };
+        } catch (error) {
+          console.error("Authorize error:", error);
           throw new Error("Invalid email or password.");
         }
-
-        console.log("Step 1 - Credentials received:", credentials);
-
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-          select: { id: true, name: true, email: true, password: true },
-        });
-
-        console.log("Step 2 - User found in database:", user);
-
-        if (!user) {
-          console.error("Step 3 - No user found with this email.");
-          throw new Error("Invalid email or password.");
-        }
-
-        const isValidPassword = await bcrypt.compare(credentials.password, user.password || "");
-        console.log("Step 4 - Password is valid:", isValidPassword);
-
-        if (!isValidPassword) {
-          console.error("Step 5 - Password does not match.");
-          throw new Error("Invalid email or password.");
-        }
-
-        console.log("Step 6 - Login successful!");
-
-        return {
-          id: user.id,
-          name: user.name || "No Name", 
-          email: user.email,
-        };
       },
     }),
   ],
