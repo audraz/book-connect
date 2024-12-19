@@ -39,7 +39,7 @@ export default function ChapterToScreen() {
       }
     } catch (err) {
       console.error(err);
-      setError("Failed to fetch recommendations.");
+      setError("Sorry, we can't give you movie recommendation based on that book. 🙁");
     } finally {
       setLoading(false);
     }
